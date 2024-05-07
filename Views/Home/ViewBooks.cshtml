@@ -1,0 +1,85 @@
+﻿@model List<ELibraryManagement.Models.Book>
+
+@{
+    ViewData["Title"] = "ViewBooks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ViewBooks</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>ISDN</th>
+            <th>Version</th>
+            <th>Year</th>
+            <th>Quantity</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.Name</td>
+                <td>@book.Author</td>
+                <td>@book.ISDN</td>
+                <td>@book.Version</td>
+                <td>@book.Year</td>
+                <td>@book.Quantity</td>
+                <td>
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Borrow", "Home",new {isdn=book.ISDN})'">Borrow</button>
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Return", "Home",new {isdn=book.ISDN})'">Return</button>
+
+@*                     <button class="btn btn-primary" onclick="borrowBook(@book.ISDN)">Borrow</button>
+                     <button class="btn btn-primary" onclick="returnBook(@book.ISDN)">Return</button>
+                *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@* 
+<script>
+    function borrowBook(ISDN) {
+        fetch(`/Home/Borrow/ISDN`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ISDN })
+        }).then(response => {
+            if (response.ok) {
+                console.log('Book borrowed successfully');
+                // Update UI or state
+            } else {
+                console.error('Error borrowing book:', response.statusText);
+            }
+        }).catch(error => {
+            console.error('Network error:', error);
+        });
+    }
+
+    function returnBook(ISDN) {
+        fetch(`/Home/Return/ISDN`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ ISDN: ISDN })
+        }).then(response => {
+            if (response.ok) {
+                console.log('Book returned successfully');
+                // Update UI or state
+            } else {
+                console.error('Error returning book:', response.statusText);
+            }
+        }).catch(error => {
+            console.error('Network error:', error);
+        });
+    }
+
+</script>
+ *@
